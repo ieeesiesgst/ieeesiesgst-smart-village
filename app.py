@@ -61,7 +61,7 @@ def temperory():
 
     <body>
         <div class=container>
-            <h1 style="color:white" align='center'>IEEE SIESGST Smart Village Project</h1>
+            <h1 style="color:white" align='center'>IEEE SIESGST Smart Village</h1>
             <h4 style="color:white" align='center'>Website under construction!!</h4>
         </div>
 
