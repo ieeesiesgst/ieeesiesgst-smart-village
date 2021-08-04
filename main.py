@@ -73,4 +73,4 @@ def temperory():
     '''
 
 if __name__ == "__main__":
-	app.run(port=int(os.getenv("PORT", default=5000)))
+	app.run(port=os.getenv("PORT", default=5000))
