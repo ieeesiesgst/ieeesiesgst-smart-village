@@ -38,7 +38,7 @@ tqdm==4.60.0
 twine==1.13.0
 urllib3==1.26.4
 webencodings==0.5.1
-Werkzeug==1.0.1
+Werkzeug>=2.0
 wincertstore==0.2
 gunicorn
 pytest
