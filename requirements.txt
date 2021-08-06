@@ -19,3 +19,4 @@ SQLAlchemy
 Werkzeug
 WTForms
 gunicorn
+psycopg2
