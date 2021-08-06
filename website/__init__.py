@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_login.mixins import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .views import views
@@ -21,9 +22,9 @@ def create_app():
 	login_manager.login_view = "auth.login"
 	login_manager.init_app(app)
 
-	# @login_manager.user_loader
-	# def load_user(user_id):
-	#     return UserMixin.query.get(int(user_id))
+	@login_manager.user_loader
+	def load_user(user_id):
+	    return UserMixin.query.get(int(user_id))
 
 	return app
 
