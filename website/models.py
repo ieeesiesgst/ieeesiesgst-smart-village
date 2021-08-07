@@ -1,8 +1,9 @@
 from . import db
-from flask import current_app
+import os
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 
 
 class User(db.Model, UserMixin):

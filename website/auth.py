@@ -1,71 +1,115 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
-from . import db
+import os
+from flask import Blueprint, render_template, redirect, url_for, request
+from . import db, mail
 from .models import User
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Message
+
 
 auth = Blueprint("auth", __name__)
 
 
-# @auth.route("/login", methods=['GET', 'POST'])
-# def login():
-#     if request.method == 'POST':
-#         email = request.form.get("email")
-#         password = request.form.get("password")
+@auth.route("/login/", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-#         user = User.query.filter_by(email=email).first()
-#         if user:
-#             if check_password_hash(user.password, password):
-#                 flash("Logged in!", category='success')
-#                 login_user(user, remember=True)
-#                 return redirect(url_for('views.home'))
-#             else:
-#                 flash('Password is incorrect.', category='error')
-#         else:
-#             flash('Email does not exist.', category='error')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                return render_template("login.html", message="Invalid Password", user=current_user)
+        else:
+            return render_template("login.html", message="Email does not exist!", user=current_user)
 
-#     return render_template("login.html", user=current_user)
+    return render_template("login.html", user=current_user)
 
 
-@auth.route("/new", methods=['GET', 'POST'])
+
+@auth.route("/signup/", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        fname = request.form.get("fname")
-        lname = request.form.get("lname")
+        fname = request.form.get("fname").capitalize()
+        lname = request.form.get("lname").capitalize()
         email = request.form.get("email")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        secert_access_key = request.form.get("secret-access")
+        secret_access_key = request.form.get("secret-access")
+        email_exists = User.query.filter_by(email=email).first()
+    
+        if email_exists:
+            return render_template("register.html", message="Email already exists!", user=current_user)
+        elif password1 != password2:
+            return render_template("register.html", message="Password don't match!", user=current_user)
+        elif secret_access_key != os.getenv("ISV_SECRET_ACCESS_KEY"):
+            return render_template("register.html", message="Oppzz! Secret access key is incorrect!", user=current_user)
+        else:
+            new_user = User(email=email, fname=fname, lname=lname, password=generate_password_hash(password1, method='sha256'))
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
+            return redirect(url_for('views.home'))
 
-        print(fname, lname, email, password1, password2, secert_access_key)
-        # email_exists = User.query.filter_by(email=email).first()
-
-        # if email_exists:
-        #     flash('Email is already in use.', category='error')
-        # elif password1 != password2:
-        #     flash('Password don\'t match!', category='error')
-        # elif len(username) < 2:
-        #     flash('Username is too short.', category='error')
-        # elif len(password1) < 6:
-        #     flash('Password is too short.', category='error')
-        # elif len(email) < 4:
-        #     flash("Email is invalid.", category='error')
-        # else:
-        #     new_user = User(email=email, username=username, password=generate_password_hash(
-        #         password1, method='sha256'))
-        #     db.session.add(new_user)
-        #     db.session.commit()
-        #     login_user(new_user, remember=True)
-        #     flash('User created!')
-        #     return redirect(url_for('views.home'))
-
-    # return render_template("signup.html", user=current_user)
-    return render_template("register.html")
+    return render_template("register.html", user=current_user)
 
 
 
-@auth.route("/logout")
+@auth.route("/logout/")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("views.home"))
+
+
+
+@auth.route("/forget-password/", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect('/home')
+    if request.method == 'POST':
+        email = request.form.get("email")
+        user = User.query.filter_by(email=email).first()
+
+        def send_reset_email(user):
+            token = user.get_reset_token()
+            msg = Message('Password Reset Request',
+                        sender='noreply-isv@siesgst.ac.in',
+                        recipients=[user.email])
+            msg.body = f'''To reset your password, visit the following link:
+            {url_for('auth.reset_token', token=token, _external=True)}
+            If you did not make this request then simply ignore this email and no changes will be made.
+            '''
+            mail.send(msg)
+
+        if user:
+            send_reset_email(user)
+            return redirect(url_for('auth.login'), message="Check your email for a link to reset your password")
+        else:
+            return render_template("forgot-password.html", message="Account does not exist!")
+    return render_template('forgot-password.html', user=current_user)
+
+
+
+@auth.route("/reset-password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('views.home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        return redirect(url_for('auth.forget-password'), message="Invalid or Expired Token received.")
+
+    if request.method == 'POST':
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+        if password1 != password2:
+            return render_template("reset-password.html", user=current_user, message="Password don't match!")
+        else:
+            password = generate_password_hash(password1, method='sha256')
+            user.password = password
+            db.session.commit()
+            return redirect(url_for('auth.login'))
+    return render_template('reset-password.html')
