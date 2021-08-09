@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="website/static/img/logo/IEEE SIESGST_white.png" alt='IEEE logo' width="200" /> 
-  <img src="website/static/img/logo/ISV-LOGO-white.png" alt='ISV logo' width="200" /> 
+  <img src="website/static/img/logo/ISV-LOGO-WHITE.png" alt='ISV logo' width="200" /> 
 </p>
 
 ## Setup & Installtion
