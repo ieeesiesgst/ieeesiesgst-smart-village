@@ -1,5 +1,12 @@
 # IEEE SIESGST Smart Village Project
 
+<p align="center">
+  <img style:"-webkit-filter: drop-shadow(5px 5px 5px #666666);"
+        "filter: drop-shadow(5px 5px 5px #666666);" src="website/static/img/logo/IEEE SIESGST_white.png" alt='IEEE logo' width="200" /> 
+  <img style:"-webkit-filter: drop-shadow(5px 5px 5px #666666);"
+        "filter: drop-shadow(5px 5px 5px #666666);" src="website/static/img/logo/ISV-LOGO-white.png" width="200" /> 
+</p>
+
 ## Setup & Installtion
 
 Make sure you have the latest version of Python installed.
@@ -27,7 +34,7 @@ pip install -r requirements.txt
 ## Running The App
 
 ```bash
-python app.py
+python main.py
 ```
 
 ## Viewing The App
