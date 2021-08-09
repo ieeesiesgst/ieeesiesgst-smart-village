@@ -1,8 +1,7 @@
 # IEEE SIESGST Smart Village Project
 
 <p align="center">
-  <img src="website/static/img/logo/IEEE SIESGST_white.png" alt='IEEE logo' width="200" /> 
-  <img src="website/static/img/logo/ISV-LOGO-WHITE.png" alt='ISV logo' width="200" /> 
+  <img src="website/static/img/logo/ISV-LOGO-COLOR1.png" alt='ISV logo' width="300" /> 
 </p>
 
 ## Setup & Installtion
