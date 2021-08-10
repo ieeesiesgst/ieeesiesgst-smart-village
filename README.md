@@ -1,5 +1,9 @@
 # IEEE SIESGST Smart Village Project
 
+<p align="center">
+  <img src="website/static/img/logo/ISV-LOGO-COLOR1.png" alt='ISV logo' width="300" /> 
+</p>
+
 ## Setup & Installtion
 
 Make sure you have the latest version of Python installed.
@@ -27,7 +31,7 @@ pip install -r requirements.txt
 ## Running The App
 
 ```bash
-python app.py
+python main.py
 ```
 
 ## Viewing The App

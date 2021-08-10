@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Blank Page - Brand</title>
+    <title>{% block title %}{% endblock %}</title>
     <meta property="og:type" content="">
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="../static/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="../static/css/untitled.css">
+    {% block head %}{% endblock %}
 </head>
 
 <body id="page-top" class="sidebar-toggled">
@@ -130,8 +131,12 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-1">Blank Page</h3>
+                    <h3 class="text-dark mb-1">{% block heading %}{% endblock %}</h3>
                 </div>
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+                
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
