@@ -18,22 +18,31 @@ Make sure you have the latest version of Python installed.
     git remote add upstream https://github.com/ieeesiesgst/ieeesiesgst-smart-village.git
     ```
 
-## Environment setup
+## Local Environment setup
 
 ```bash
-# setup conda enironment
+# 1. setup conda enironment
 conda create --name <env_name> python
-
-# install requirements
+```
+```bash
+# 2. activate your environment 
+conda activate <env_name>
+```
+```bash
+# 3. Go to the cloned repo location & install the requirements
 pip install -r requirements.txt
 ```
-
-## Running The App
-
 ```bash
+# 4. Set the isv creds. in the environment provided by project admin
+```
+```bash
+# 5. Running The App
 python main.py
 ```
+```bash
+# 6. Viewing The App
+Go to http://localhost:5000/
+```
 
-## Viewing The App
-
-Go to `http://localhost:5000/`
+---
+ Project maintainer: [`@prathameshThakur`](https://github.com/prathameshThakur)
