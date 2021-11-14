@@ -1,8 +1,10 @@
 # IEEE SIESGST Smart Village Project
 
+<a href='https://smartvillage.ieeesiesgst.in/'>
 <p align="center">
   <img src="website/static/img/logo/ISV-LOGO-COLOR1.png" alt='ISV logo' width="300" /> 
 </p>
+</a>
 
 ## Setup & Installtion
 
