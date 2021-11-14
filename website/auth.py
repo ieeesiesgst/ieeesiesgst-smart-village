@@ -13,7 +13,7 @@ auth = Blueprint("auth", __name__)
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
-                sender='noreply-isv.siesgst@gmail.com',
+                sender='isv.siesgst@gmail.com',
                 recipients=[user.email])
     msg.body = f'''To reset your password, visit the following link:
 {url_for('auth.reset_token', token=token, _external=True)}
