@@ -1,0 +1,29 @@
+.abt-heading{
+    text-align: center;
+}
+.abt-section{
+    background-color: #4F631C;
+}
+.abt-card{
+    background-color: transparent;
+    border: 0;
+}
+.abt-style{
+    text-align: center;
+}
+.abt-more{
+    color: #fff;
+    border: 3px solid transparent;
+    border-radius: 28.5px;
+    border-color: #9ebe1b;
+}
+.abt-head{
+    height: 5px !important;
+    color: #9ebe1b;
+    width: 288px;
+    margin: auto;
+    opacity: 1;
+}
+.style-head{
+    height: 20px;
+}
